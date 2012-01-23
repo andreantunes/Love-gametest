@@ -8,3 +8,7 @@ function Monster.create()
     
     return newMonster
 end
+
+function Monster:isMonster()
+    return true
+end

@@ -4,7 +4,7 @@ Stage_mt = { __index = Stage }
 Stage.player = { }
 Stage.things = { }
 Stage.images = { }
-Stage.gravityTicks = 0
+Stage.modules = { }
 
 Stage.initialPos = { gX = 100, gY = 100 }
 
@@ -71,18 +71,13 @@ function Stage:canMoveThing(thing, gX, gY)
 end
 
 function Stage:poll(dt)
-    self.gravityTicks = self.gravityTicks + dt
-    
-    if self.gravityTicks > 0.1 then
-        self.gravityTicks = 0 
-        
-        for _, layer in ipairs(self.things) do
-            for _, thing in ipairs(layer) do
-                if not thing:ignoreGravity() then
-                    thing:gratity()
-                end
-            end
-        end
+    for _, module in ipairs(self.modules) do
+        module:poll(self, dt)
     end
 end
+
+function Stage:addModule(module)
+    table.insert(self.modules, module)
+end
+
 

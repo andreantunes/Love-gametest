@@ -2,10 +2,14 @@ Creature = { }
 setmetatable(Creature, Thing_mt)
 Creature_mt = { __index = Creature } 
 
-function Creature:gratity()
-    self.stage:moveThing(self, self:getGX(), self:getGY() + 10)
+function Creature:isObject()
+    return false
 end
 
-function Creature:ignoreGravity()
+function Creature:isMonster()
+    return false
+end
+
+function Creature:isPlayer()
     return false
 end

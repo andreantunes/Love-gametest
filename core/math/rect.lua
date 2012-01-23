@@ -38,9 +38,18 @@ function Rect:isInMyArea(gX, gY)
     return gX >= self.gX and gY >= self.gY and gX <= self.gX + self.width and gY <= self.gY + self.height;
 end
 
-function Rect:isColliding(thing)
+function Rect:isOutOfMyArea(gX, gY)
+    return not self:isInMyArea(gX, gY)
+end
+
+function Rect:internalColliding(thing)
     return self:isInMyArea(thing:getGX(), thing:getGY())
         or self:isInMyArea(thing:getGX(), thing:getGY() + thing:getH())
         or self:isInMyArea(thing:getGX() + thing:getW(), thing:getGY())
-        or self:isInMyArea(thing:getGX() + thing:getW(), thing:getGY() + thing:getH());
+        or self:isInMyArea(thing:getGX() + thing:getW(), thing:getGY() + thing:getH())
+end
+
+function Rect:isColliding(thing)
+    return self:internalColliding(thing) or thing:internalColliding(self)
+--        or Rect:imInside(thing)
 end

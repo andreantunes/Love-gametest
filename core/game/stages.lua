@@ -8,6 +8,7 @@ function g_stages:load(stageName)
     
     self:loadImages(stage, stageName)
     self:loadThings(stage, stageName)
+    self:loadMain(stage, stageName)
     
     return true
 end
@@ -17,6 +18,15 @@ function g_stages:loadImages(stage, stageName)
     
     for _, image in ipairs(images) do
         stage:setImage(image.name, love.graphics.newImage('game/stages/' .. stageName .. "/images/" .. image.path))
+    end
+end
+
+function g_stages:loadMain(stage, stageName)
+    local main = require('game/stages/' .. stageName .. "/main.lua")
+    
+    for _, modulePath in ipairs(main.modules) do
+        local moduleScript = require('game/modules/' .. modulePath)
+        stage:addModule(moduleScript)
     end
 end
 

@@ -8,10 +8,6 @@ function Object.create()
     return newObject
 end
 
-function Object.gratity()
-    return 
-end
-
-function Thing:ignoreGravity()
+function Object:isObject()
     return true
 end

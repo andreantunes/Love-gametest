@@ -8,10 +8,6 @@ Thing.name = ''
 Thing.blockeable = false
 Thing.noImage = false
    
-function Thing:ignoreGravity()
-    return true
-end
-
 function Thing:setNoImage(state)
     self.noImage = state
 end
@@ -49,3 +45,4 @@ end
 function Thing:setBlockeable(state)
     self.blockeable = state
 end
+

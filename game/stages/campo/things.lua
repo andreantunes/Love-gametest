@@ -10,7 +10,11 @@ local things = {
     },
 
     monsters = {
-         { image = "pikachu", gX = 120, gY = 120,  width = 32, height = 32, layer = 3 }
+         { image = "pikachu", gX = 120, gY = 120,  width = 32, height = 32, layer = 3 },
+         { image = "pikachu", gX = 150, gY = 120,  width = 32, height = 32, layer = 3 },
+         { image = "pikachu", gX = 170, gY = 120,  width = 32, height = 32, layer = 3 },
+         { image = "pikachu", gX = 180, gY = 120,  width = 32, height = 32, layer = 3 },
+         { image = "pikachu", gX = 200, gY = 120,  width = 32, height = 32, layer = 3 }
     }
 }
 

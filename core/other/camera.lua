@@ -20,26 +20,21 @@ function g_camera:draw()
         return
     end
     
+    self:addGX(1)
+    
     local things = self.stage:getThings()
 
-    local succ, err = pcall(function() 
+    local count = 0
     for _, layer in ipairs(things) do
         for _, thing in ipairs(layer) do
-            
-
             local image = thing:getImage()
 
             if image ~= nil then
                 if self:shouldDraw(thing) then
-                    
-                    love.graphics.draw(thing:getImage(), thing:getGX(), thing:getGY())
+                    count = count + 1
+                    love.graphics.draw(thing:getImage(), thing:getGX() - self:getGX(), thing:getGY() - self:getGY())
                 end
             end
         end
-    end
-    end)
-    
-    if not succ then
-        print(err)
     end
 end
