@@ -51,5 +51,4 @@ end
 
 function Rect:isColliding(thing)
     return self:internalColliding(thing) or thing:internalColliding(self)
---        or Rect:imInside(thing)
 end

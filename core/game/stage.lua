@@ -74,6 +74,12 @@ function Stage:poll(dt)
     for _, module in ipairs(self.modules) do
         module:poll(self, dt)
     end
+    
+    for _, layer in ipairs(self.things) do
+        for _, thingOnLayer in ipairs(layer) do
+            thingOnLayer:poll(dt)
+        end
+    end
 end
 
 function Stage:addModule(module)

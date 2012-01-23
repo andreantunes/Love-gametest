@@ -7,7 +7,9 @@ Thing.image = nil
 Thing.name = ''
 Thing.blockeable = false
 Thing.noImage = false
+Thing.scriptPoll = 0
    
+
 function Thing:setNoImage(state)
     self.noImage = state
 end
@@ -34,15 +36,29 @@ function Thing.create()
     return newThing
 end
 
-function Thing:gratity()
-    
-end
-
 function Thing:isBlockeable()
     return self.blockeable
 end
 
 function Thing:setBlockeable(state)
     self.blockeable = state
+end
+
+function Thing:poll(dt)
+    if self.scriptPoll ~= 0 then
+        self.scriptPoll(self, dt)
+    end
+end
+
+function Thing:isObject()
+    return false
+end
+
+function Thing:isMonster()
+    return false
+end
+
+function Thing:isPlayer()
+    return false
 end
 

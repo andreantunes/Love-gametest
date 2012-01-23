@@ -12,3 +12,16 @@ end
 function Monster:isMonster()
     return true
 end
+
+function Monster:load(stage, script)
+    self:setImage(stage.images[script.image])
+
+    self:setW(script.w)
+    self:setH(script.h)
+    
+    self:setStage(stage)
+    
+    if script.poll ~= nil then
+        self.scriptPoll = script.poll
+    end
+end

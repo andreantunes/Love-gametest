@@ -55,14 +55,11 @@ function g_stages:loadThings(stage, stageName)
     
     for _, thing in ipairs(things.monsters) do
         local newMonster = Monster.create()
-
-        newMonster:setImage(stage.images[thing.image])
+        
         newMonster:setGX(thing.gX)
         newMonster:setGY(thing.gY)
-        newMonster:setW(thing.width)
-        newMonster:setH(thing.height)
         
-        newMonster:setStage(stage)
+        newMonster:load(stage, require('game/monsters/' .. thing.script))
         
         stage:addThing(newMonster, thing.layer)
     end
