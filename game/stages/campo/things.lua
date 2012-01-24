@@ -8,7 +8,7 @@ local things = {
     },
 
     player = { 
-         gX = 50, gY = 50, layer = 3 
+         gX = 50, gY = 50, layer = 3, width = 50, height = 50,
     },
 
     monsters = {

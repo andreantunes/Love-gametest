@@ -20,6 +20,18 @@ function Stage:stop()
     self.reset()
 end
 
+function Stage:setPlayer(player)
+    self.player = player
+end
+
+function Stage:onKeyPressed(key)
+    self.player.script.keyPressed(self.player, key)
+end
+
+function Stage:onKeyReleased(key)
+    self.player.script.keyReleased(self.player, key)
+end
+
 function Stage:reset()
     g_camera:setStage(nil)
 end

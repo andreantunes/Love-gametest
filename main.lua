@@ -12,3 +12,11 @@ end
 function love.draw()
     g_camera:draw()
 end
+
+function love.keypressed(key, unicode)
+    g_game:keyPressed(key, unicode)
+end
+
+function love.keyreleased(key, unicode)
+    g_game:keyReleased(key, unicode)
+end

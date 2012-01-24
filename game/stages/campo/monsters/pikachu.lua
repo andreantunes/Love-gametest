@@ -8,7 +8,7 @@ monster.lol = 0
 
 function monster.poll(thing, dt)
     if monster.lol == 0 then
-        monster.lol = math.random(1,5)
+        monster.lol = math.random(1,3)
     end
     
     thing:addGX(monster.lol)

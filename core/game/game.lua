@@ -55,3 +55,20 @@ function g_game:loadDefaultScripts()
     setmetatable(self.defaultObjectScript, { __index = self.defaultCreatureScript } )
     setmetatable(self.defaultMonsterScript, { __index = self.defaultCreatureScript } )
 end
+
+
+function g_game:keyPressed(key, unicode)
+    if self.currentStage == nil then
+        return
+    end
+    
+    self.currentStage:onKeyPressed(key)
+end
+
+function g_game:keyReleased(key, unicode)
+    if self.currentStage == nil then
+        return
+    end
+    
+    self.currentStage:onKeyReleased(key)
+end

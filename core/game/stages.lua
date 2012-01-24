@@ -67,8 +67,22 @@ function g_stages:loadThings(stage, stageName)
     
     local player = things.player
     
-    g_player:setGX(player.gX)
-    g_player:setGY(player.gY)
+    local newPlayer = Player.create()
+    
+    newPlayer:setGX(player.gX)
+    newPlayer:setGY(player.gY)
+    newPlayer:setW(player.width)
+    newPlayer:setH(player.height)
+    
+    newPlayer:setStage(stage)
+    stage:setPlayer(newPlayer)
+    
+    local playerScript = dofile('game/stages/' .. stageName .. "/player.lua")
+    setmetatable(playerScript, { __index = g_game.defaultPlayerScript } )
+    
+    newPlayer:setScript(playerScript)
+        
+    stage:addThing(newPlayer, player.layer)
     
     for _, thing in ipairs(things.monsters) do
         local newMonster = Monster.create()
