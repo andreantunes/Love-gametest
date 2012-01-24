@@ -7,8 +7,7 @@ Thing.image = nil
 Thing.name = ''
 Thing.blockeable = false
 Thing.noImage = false
-Thing.scriptPoll = 0
-   
+Thing.script = 0
 
 function Thing:setNoImage(state)
     self.noImage = state
@@ -19,11 +18,13 @@ function Thing:setStage(stage)
 end
 
 function Thing:getImage()
-    if self.noImage then
+    local imageName = self.script.getImageName()
+    
+    if imageName == nil then
         return nil
     end
     
-    return self.image
+    return self.stage:getImage(imageName)
 end
 
 function Thing:setImage(image)
@@ -45,9 +46,7 @@ function Thing:setBlockeable(state)
 end
 
 function Thing:poll(dt)
-    if self.scriptPoll ~= 0 then
-        self.scriptPoll(self, dt)
-    end
+    self.script.poll(self, dt)
 end
 
 function Thing:isObject()
@@ -60,5 +59,13 @@ end
 
 function Thing:isPlayer()
     return false
+end
+
+function Thing:setScript(script)
+    self.script = script
+end
+
+function Thing:onMove(gX, gY)
+    self.script.onMove(gX, gY)
 end
 

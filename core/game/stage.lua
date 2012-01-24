@@ -1,7 +1,7 @@
 Stage = {}
 Stage_mt = { __index = Stage }
 
-Stage.player = { }
+Stage.player = 0
 Stage.things = { }
 Stage.images = { }
 Stage.modules = { }
@@ -34,6 +34,10 @@ function Stage:setImage(name, img)
     self.images[name] = img
 end
 
+function Stage:getImage(name)
+    return self.images[name]
+end
+
 function Stage:getThings()
     return self.things
 end
@@ -50,10 +54,16 @@ function Stage:moveThing(thing, gX, gY)
     if self:canMoveThing(thing, gX, gY) then
         thing:setGX(gX)
         thing:setGY(gY)
+        
+        thing:onMove(gX, gY)
     end
 end
 
 function Stage:canMoveThing(thing, gX, gY)
+    if thing.script.ignoreBlock(thing) then
+        return true
+    end
+    
     local testingRect = Rect.create()
     testingRect:copyRect(thing)
     testingRect:setGX(gX)

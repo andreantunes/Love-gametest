@@ -1,0 +1,3 @@
+local creature = { }
+
+return creature

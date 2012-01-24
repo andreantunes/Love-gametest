@@ -1,0 +1,3 @@
+local monster = { }
+
+return monster

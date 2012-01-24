@@ -14,7 +14,7 @@ function g_stages:load(stageName)
 end
 
 function g_stages:loadImages(stage, stageName)
-    local images = require('game/stages/' .. stageName .. "/images/images.lua")
+    local images = dofile('game/stages/' .. stageName .. "/images/images.lua")
     
     for _, image in ipairs(images) do
         stage:setImage(image.name, love.graphics.newImage('game/stages/' .. stageName .. "/images/" .. image.path))
@@ -22,16 +22,16 @@ function g_stages:loadImages(stage, stageName)
 end
 
 function g_stages:loadMain(stage, stageName)
-    local main = require('game/stages/' .. stageName .. "/main.lua")
+    local main = dofile('game/stages/' .. stageName .. "/main.lua")
     
     for _, modulePath in ipairs(main.modules) do
-        local moduleScript = require('game/modules/' .. modulePath)
+        local moduleScript = dofile('game/modules/' .. modulePath)
         stage:addModule(moduleScript)
     end
 end
 
 function g_stages:loadThings(stage, stageName)
-    local things = require('game/stages/' .. stageName .. "/things.lua")
+    local things = dofile('game/stages/' .. stageName .. "/things.lua")
     
     for _, thing in ipairs(things.objects) do
         local newObject = Object.create()
@@ -49,9 +49,26 @@ function g_stages:loadThings(stage, stageName)
         
         newObject:setStage(stage)
         newObject:setBlockeable(thing.blockeable)
+
+        local objectScript = nil
+        
+        if thing.script ~= nil then
+            objectScript = dofile('game/stages/' .. stageName .. "/objects/" .. thing.script)
+        else
+            objectScript = dofile('game/stages/' .. stageName .. "/objects/default.lua")
+        end
+        
+        setmetatable(objectScript, { __index = g_game.defaultObjectScript } )
+        
+        newObject:setScript(objectScript)
         
         stage:addThing(newObject, thing.layer)
     end
+    
+    local player = things.player
+    
+    g_player:setGX(player.gX)
+    g_player:setGY(player.gY)
     
     for _, thing in ipairs(things.monsters) do
         local newMonster = Monster.create()
@@ -59,7 +76,11 @@ function g_stages:loadThings(stage, stageName)
         newMonster:setGX(thing.gX)
         newMonster:setGY(thing.gY)
         
-        newMonster:load(stage, require('game/monsters/' .. thing.script))
+        local monsterScript = dofile('game/stages/' .. stageName .. "/monsters/" .. thing.script)
+        setmetatable(monsterScript, { __index = g_game.defaultMonsterScript } )
+        
+        newMonster:load(stage, monsterScript)
+        newMonster:setScript(monsterScript)
         
         stage:addThing(newMonster, thing.layer)
     end

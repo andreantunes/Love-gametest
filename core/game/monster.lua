@@ -20,8 +20,4 @@ function Monster:load(stage, script)
     self:setH(script.h)
     
     self:setStage(stage)
-    
-    if script.poll ~= nil then
-        self.scriptPoll = script.poll
-    end
 end

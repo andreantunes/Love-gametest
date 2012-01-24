@@ -20,8 +20,6 @@ function g_camera:draw()
         return
     end
     
-    self:addGX(1)
-    
     local things = self.stage:getThings()
 
     for _, layer in ipairs(things) do

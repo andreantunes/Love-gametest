@@ -1,5 +1,5 @@
 function love.conf(t)
-    t.title = "Blocos ninja"
+    t.title = "Love Engine"
     
     t.screen.width = 1024
     t.screen.height = 768

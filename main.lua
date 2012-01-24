@@ -6,6 +6,7 @@ end
 
 function love.load()
     g_game:init()
+    math.randomseed(os.time())
 end
 
 function love.draw()

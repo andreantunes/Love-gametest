@@ -1,7 +1,15 @@
 g_game = { }
 g_game.currentStage = nil
 
+g_game.defaultThingScript = nil
+g_game.defaultObjectScript = nil
+g_game.defaultCreatureScript = nil
+g_game.defaultPlayerScript = nil
+g_game.defaultMonsterScript = nil
+
 function g_game:init()
+    self:loadDefaultScripts()
+    
     self:chooseStage('campo')
 
     g_camera:setGX(0)
@@ -33,4 +41,17 @@ function g_game:chooseStage(stageName)
     else
         error(stageName .. " not found.")
     end
+end
+
+function g_game:loadDefaultScripts()
+    self.defaultThingScript = dofile('game/thing.lua')
+    self.defaultCreatureScript = dofile('game/creature.lua')
+    self.defaultPlayerScript = dofile('game/player.lua')
+    self.defaultObjectScript = dofile('game/object.lua')
+    self.defaultMonsterScript = dofile('game/monster.lua')
+
+    setmetatable(self.defaultCreatureScript, { __index = self.defaultThingScript } )
+    setmetatable(self.defaultPlayerScript, { __index = self.defaultCreatureScript } )
+    setmetatable(self.defaultObjectScript, { __index = self.defaultCreatureScript } )
+    setmetatable(self.defaultMonsterScript, { __index = self.defaultCreatureScript } )
 end
