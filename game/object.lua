@@ -13,19 +13,7 @@ function object.onMovePushThings(thing, oldPos, newPos)
         return
     end
 
-    local function figureOutMovingDirection(oldPos, newPos)
-        if newPos.gX - oldPos.gX > 0 then
-            return "right"
-        elseif newPos.gX - oldPos.gX < 0 then
-            return "left"
-        elseif newPos.gY - oldPos.gY > 0 then
-            return "down"
-        else
-            return "up"
-        end
-    end
-
-    local myMovingDirection = figureOutMovingDirection(oldPos, newPos)
+    local myMovingDirection = Rect.figureOutMovingDirection(oldPos, newPos)
     
     for _, collidingThing in ipairs(things) do
         if not collidingThing.script.ignoreBlock(collidingThing) then

@@ -28,4 +28,8 @@ function object.getImageName()
     return "stone"
 end
 
+function object:init(thing)
+    object:setCurrentQuad(love.graphics.newQuad(0, 0, 124, 63, 124, 63))
+end
+
 return object

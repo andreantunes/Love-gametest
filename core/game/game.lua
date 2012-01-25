@@ -23,6 +23,8 @@ function g_game:poll(dt)
     if g_game.currentStage ~= nil then
         g_game.currentStage:poll(dt)
     end
+    
+    g_camera:poll(dt)
 end
 
 function g_game:chooseStage(stageName)
@@ -55,7 +57,6 @@ function g_game:loadDefaultScripts()
     setmetatable(self.defaultObjectScript, { __index = self.defaultCreatureScript } )
     setmetatable(self.defaultMonsterScript, { __index = self.defaultCreatureScript } )
 end
-
 
 function g_game:keyPressed(key, unicode)
     if self.currentStage == nil then

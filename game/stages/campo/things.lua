@@ -4,11 +4,11 @@ local things = {
         { script = "map.lua", gX = 0, gY = 0, layer = 2, width = 3000, height = 960, blockeable = false },
         { script = "stone.lua", gX = 120, gY = 250, layer = 2, width = 124, height = 63, blockeable = true },
 
-        { gX = 0, gY = 738, width = 792, height = 100, layer = 2, blockeable = true },
+        { gX = 0, gY = 742, width = 792, height = 100, layer = 2, blockeable = true },
     },
 
     player = { 
-         gX = 50, gY = 50, layer = 3, width = 50, height = 50,
+         gX = 50, gY = 50, layer = 3, width = 32, height = 32,
     },
 
     monsters = {

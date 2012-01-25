@@ -1,7 +1,7 @@
 local player = { }
 
 function player.getImageName()
-    return "pikachu"
+    return "tashigi"
 end
 
 function player.onKeyPressed(key)
@@ -20,5 +20,8 @@ function player.loadActions(stageName)
     end
 end
 
+function player:init(thing)
+    self:setCurrentQuad(love.graphics.newQuad(0, 0, 32, 32, 96, 128))
+end
 
 return player

@@ -24,6 +24,10 @@ function Stage:setPlayer(player)
     self.player = player
 end
 
+function Stage:getPlayer()
+    return self.player
+end
+
 function Stage:onKeyPressed(key)
     self.player.script.keyPressed(self.player, key)
 end
@@ -64,17 +68,16 @@ end
 
 function Stage:moveThing(thing, gX, gY)
     local oldPosition = { gX = thing:getGX(), gY = thing:getGY() }
-    local newPosition = { gX = thing:getGX() + gX, gY = thing:getGY() + gY }
-
-    local realPositionGX = gX + thing:getGX()
-    local realPositionGY = gY + thing:getGY()
+    local newPosition = Stage:getLongestAvaiblePosition(thing, gX, gY)
     
-    if self:canMoveThing(thing, newPosition.gX, newPosition.gY) then
-        thing:setGX(newPosition.gX)
-        thing:setGY(newPosition.gY)
-        
-        thing:onMove(oldPosition, newPosition)
+    if newPosition == nil then
+        return
     end
+    
+    thing:setGX(newPosition.gX)
+    thing:setGY(newPosition.gY)
+    
+    thing:onMove(oldPosition, newPosition)
 end
 
 function Stage:moveThingTo(thing, gX, gY)
@@ -155,4 +158,31 @@ function Stage:checkColision(thing, plusGX, plusGY)
     end
     
     return false
+end
+
+function Stage:getLongestAvaiblePosition(thing, plusGX, plusGY)
+    if thing.script.ignoreBlock(thing) then
+        return { gX = thing:getGX() + plusGX, gY = thing:getGY() + plusGY }
+    end
+    
+    local multiplePlusGX = 0
+    local multiplePlusGY = 0
+    
+    if plusGX ~= 0 then
+        multiplePlusGX = plusGX > 0 and -1 or 1
+        
+    elseif plusGY ~= 0 then
+        multiplePlusGY = plusGY > 0 and -1 or 1
+    end
+
+    while plusGX ~= 0 or plusGY ~= 0 do
+        if not self:checkColision(thing, plusGX, plusGY) then
+            return { gX = thing:getGX() + plusGX, gY = thing:getGY() + plusGY }
+        end
+        
+        plusGX = plusGX + (1 * multiplePlusGX)
+        plusGY = plusGY + (1 * multiplePlusGY)
+    end
+    
+    return nil
 end

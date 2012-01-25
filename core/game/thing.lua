@@ -63,6 +63,7 @@ end
 
 function Thing:setScript(script)
     self.script = script
+    
 end
 
 function Thing:onMove(oldPos, newPos)

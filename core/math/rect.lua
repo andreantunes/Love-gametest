@@ -1,6 +1,5 @@
 Rect = { }
 Rect_mt = { __index = Rect }
-setmetatable(Rect, Rect_mt)
 
 function Rect.create()
     local newRect = {}
@@ -72,3 +71,16 @@ function Rect:getNearestValidPosition(thing, direction)
     
     return nil
 end
+
+function Rect.figureOutMovingDirection(oldPos, newPos)
+    if newPos.gX - oldPos.gX > 0 then
+        return "right"
+    elseif newPos.gX - oldPos.gX < 0 then
+        return "left"
+    elseif newPos.gY - oldPos.gY > 0 then
+        return "down"
+    else
+        return "up"
+    end
+end
+
