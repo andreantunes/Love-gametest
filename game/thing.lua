@@ -14,7 +14,7 @@ function t.poll(thing, dt)
 
 end
 
-function t.onMove(thing, gX, gY)
+function t.onMove(thing, oldPos, newPos)
     
 end
 

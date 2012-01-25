@@ -6,7 +6,7 @@ object.going = true
 
 function object.poll(thing, dt)
     if object.going then
-        thing:addGX(1)
+        thing:getStage():moveThing(thing, 1, 0)
         
         object.curX = object.curX + 1
         
@@ -14,7 +14,7 @@ function object.poll(thing, dt)
             object.going = false
         end
     else
-        thing:addGX(-1)
+        thing:getStage():moveThing(thing, -1, 0)
         
         object.curX = object.curX - 1
         

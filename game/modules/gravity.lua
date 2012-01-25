@@ -3,7 +3,7 @@ local m = { }
 m.ticks = 0;
 
 function m:gravity(stage, thing)
-    stage:moveThing(thing, thing:getGX(), thing:getGY() + 3)
+    stage:moveThing(thing, 0, 3)
 end
 
 function m:poll(stage, dt)

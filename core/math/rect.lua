@@ -52,3 +52,23 @@ end
 function Rect:isColliding(thing)
     return self:internalColliding(thing) or thing:internalColliding(self)
 end
+
+function Rect:getNearestValidPosition(thing, direction)
+    local myPos = { gX = self:getGX(), gY = self:getGY(), w = self:getW(), h = self:getH() }
+    local thingPos = { gX = thing:getGX(), gY = thing:getGY(), w = thing:getW(), h = thing:getH() }
+
+    if direction == "right" then
+        return { gX = myPos.gX + myPos.w + 1 , gY = thingPos.gY } 
+
+    elseif direction == "left" then
+        return { gX = myPos.gX - thingPos.w - 1, gY = thingPos.gY }
+    
+    elseif direction == "up" then
+        return { gX = thingPos.gX, gY = myPos.gY - thingPos.h - 1}
+
+    elseif direction == "down" then
+        return { gX = thingPos.gX, gY = myPos.gY + myPos.h + 1}
+    end
+    
+    return nil
+end

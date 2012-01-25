@@ -63,11 +63,29 @@ function Stage:addThing(thing, layer)
 end
 
 function Stage:moveThing(thing, gX, gY)
+    local oldPosition = { gX = thing:getGX(), gY = thing:getGY() }
+    local newPosition = { gX = thing:getGX() + gX, gY = thing:getGY() + gY }
+
+    local realPositionGX = gX + thing:getGX()
+    local realPositionGY = gY + thing:getGY()
+    
+    if self:canMoveThing(thing, newPosition.gX, newPosition.gY) then
+        thing:setGX(newPosition.gX)
+        thing:setGY(newPosition.gY)
+        
+        thing:onMove(oldPosition, newPosition)
+    end
+end
+
+function Stage:moveThingTo(thing, gX, gY)
+    local oldPosition = { gX = thing:getGX(), gY = thing:getGY() }
+    local newPosition = { gX = gX, gY = gY }
+    
     if self:canMoveThing(thing, gX, gY) then
         thing:setGX(gX)
         thing:setGY(gY)
         
-        thing:onMove(gX, gY)
+        thing:onMove(oldPosition, newPosition)
     end
 end
 
@@ -108,4 +126,17 @@ function Stage:addModule(module)
     table.insert(self.modules, module)
 end
 
+function Stage:getCollidingThings(thing)
+    local ret = { }
+    
+    for _, layer in ipairs(self.things) do
+        for _, thingOnLayer in ipairs(layer) do
+            if thing ~= thingOnLayer and not thingOnLayer.script.ignoreBlock(thingOnLayer) and thing:isColliding(thingOnLayer) then
+                table.insert(ret, thingOnLayer)
+            end
+        end
+    end
+    
+    return ret
+end
 

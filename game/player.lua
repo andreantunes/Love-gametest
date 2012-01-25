@@ -22,11 +22,11 @@ end
 
 function p.poll(thing, dt)
     if p.keys["right"] ~= nil and p.keys["right"] then
-        thing:addGX(4)
+        thing:getStage():moveThing(thing, 2, 0)
     end
 
     if p.keys["left"] ~= nil and p.keys["left"] then
-        thing:addGX(-4)
+        thing:getStage():moveThing(thing, -2, 0)
     end
 end
 

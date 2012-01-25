@@ -65,7 +65,11 @@ function Thing:setScript(script)
     self.script = script
 end
 
-function Thing:onMove(gX, gY)
-    self.script.onMove(gX, gY)
+function Thing:onMove(oldPos, newPos)
+    self.script.onMove(self, oldPos, newPos)
+end
+
+function Thing:getStage()
+    return self.stage
 end
 
