@@ -81,6 +81,7 @@ function g_stages:loadThings(stage, stageName)
     setmetatable(playerScript, { __index = g_game.defaultPlayerScript } )
     
     newPlayer:setScript(playerScript)
+    newPlayer.script.loadActions(stageName)
         
     stage:addThing(newPlayer, player.layer)
     

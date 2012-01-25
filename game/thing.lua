@@ -1,5 +1,7 @@
 local t = { }
 
+t.actions = { }
+
 t.currentImageName = 0
 t.currentImageX1 = 0
 t.currentImageY1 = 0

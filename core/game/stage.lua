@@ -140,3 +140,19 @@ function Stage:getCollidingThings(thing)
     return ret
 end
 
+function Stage:checkColision(thing, plusGX, plusGY)
+    local testingRect = Rect.create()
+    testingRect:copyRect(thing)
+    testingRect:addGX(plusGX)
+    testingRect:addGY(plusGY)
+
+    for _, layer in ipairs(self.things) do
+        for _, thingOnLayer in ipairs(layer) do
+            if thing ~= thingOnLayer and thingOnLayer:isBlockeable() and thingOnLayer:isColliding(testingRect) then
+                return true
+            end
+        end
+    end
+    
+    return false
+end
