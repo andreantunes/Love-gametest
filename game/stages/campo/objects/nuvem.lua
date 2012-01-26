@@ -1,11 +1,11 @@
 local object = { }
 
 function object:getImageName()
-    return "map"
+    return "nuvem"
 end
 
 function object:init(thing)
-    self:setCurrentQuad(love.graphics.newQuad(0, 0, 3000, 960, 3000, 960))
+    self:setCurrentQuad(love.graphics.newQuad(0, 0, 205, 107, 205, 107))
 end
 
 return object

@@ -20,9 +20,12 @@ function g_camera:poll(dt)
         return
     end
     
-    local player = g_game.currentStage:getPlayer()
+    local stage = g_game.currentStage
     
-    self:setGX(math.max(player:getGX() - 512 + (player:getW() / 2), 0))
+    local player = stage:getPlayer()
+    
+    self:setGX(math.max(math.min(player:getGX() - (self:getW() / 2) + (player:getW() / 2), stage:getW() - self:getW()), 0))
+    self:setGY(math.max(math.min(player:getGY() - (self:getH() / 2), stage:getH() - self:getH()), 0))
 end
 
 function g_camera:draw()
@@ -38,13 +41,7 @@ function g_camera:draw()
 
             if image ~= nil then
                 if self:shouldDraw(thing) then
-                    local quad = thing.script:getQuad()
-                    
-                    local x, y, w, h = quad:getViewport( )
-                    
-                 --   print(x .. " " .. y .. " " .. w .. " " .. h)
-                    
-                    love.graphics.drawq(thing:getImage(), quad, thing:getGX() - self:getGX(), thing:getGY() - self:getGY())
+                    love.graphics.drawq(thing:getImage(), thing.script:getQuad(), thing:getGX() - self:getGX(), thing:getGY() - self:getGY())
                 end
             end
         end

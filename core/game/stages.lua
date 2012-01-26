@@ -28,6 +28,9 @@ function g_stages:loadMain(stage, stageName)
         local moduleScript = dofile('game/modules/' .. modulePath)
         stage:addModule(moduleScript)
     end
+    
+    stage:setW(main.width)
+    stage:setH(main.height)
 end
 
 function g_stages:loadThings(stage, stageName)
@@ -62,7 +65,9 @@ function g_stages:loadThings(stage, stageName)
         
         newObject:setScript(objectScript)
         newObject.script:init(newObject)
-        
+        newObject.script:loadActions(stageName)
+        newObject.script:thingInit()
+
         stage:addThing(newObject, thing.layer)
     end
     
@@ -82,8 +87,9 @@ function g_stages:loadThings(stage, stageName)
     setmetatable(playerScript, { __index = g_game.defaultPlayerScript } )
     
     newPlayer:setScript(playerScript)
-    newPlayer.script.loadActions(stageName)
+    newPlayer.script:loadActions(stageName)
     newPlayer.script:init(newPlayer)
+    newPlayer.script:thingInit()
         
     stage:addThing(newPlayer, player.layer)
     
@@ -99,6 +105,8 @@ function g_stages:loadThings(stage, stageName)
         newMonster:load(stage, monsterScript)
         newMonster:setScript(monsterScript)
         newMonster.script:init(newMonster)
+        newMonster.script:loadActions(stageName)
+        newMonster.script:thingInit()
             
         stage:addThing(newMonster, thing.layer)
     end

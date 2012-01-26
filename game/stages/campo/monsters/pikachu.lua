@@ -9,7 +9,7 @@ monster.currentImageY2 = 52
 
 monster.lol = 0
 
-function monster.poll(thing, dt)
+function monster:poll(thing, dt)
     if monster.lol == 0 then
         monster.lol = math.random(1,3)
     end
@@ -17,7 +17,7 @@ function monster.poll(thing, dt)
     thing:getStage():moveThing(thing, 2, 0)
 end
 
-function monster.getImageName()
+function monster:getImageName()
     return "pikachu"
 end
 

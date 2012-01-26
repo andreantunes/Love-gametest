@@ -1,26 +1,28 @@
 local player = { }
 
-function player.getImageName()
+function player:getImageName()
     return "tashigi"
 end
 
-function player.onKeyPressed(key)
+function player:onKeyPressed(key)
     
 end
 
-function player.onKeyReleased(key)
+function player:onKeyReleased(key)
     
 end
 
 local activatedActions = { "jump.lua", "walk.lua" } 
 
-function player.loadActions(stageName)
+function player:loadActions(stageName)
+    self.actions = { }
+    
     for _, actionPath in ipairs(activatedActions) do
-        table.insert(player.actions, dofile('game/stages/' .. stageName .. "/player/" .. actionPath))
+        table.insert(self.actions, dofile('game/stages/' .. stageName .. "/player/" .. actionPath))
     end
 end
 
-function player:init(thing)
+function player:init(thing, stageName)
     self:setCurrentQuad(love.graphics.newQuad(0, 0, 32, 32, 96, 128))
 end
 

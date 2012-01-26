@@ -3,6 +3,8 @@ local things = {
         { script = "background.lua", gX = 0, gY = 0, layer = 1, width = 3000, height = 960, blockeable = false },
         { script = "map.lua", gX = 0, gY = 0, layer = 2, width = 3000, height = 960, blockeable = false },
         { script = "stone.lua", gX = 120, gY = 250, layer = 2, width = 124, height = 63, blockeable = true },
+        
+        { script = "nuvem.lua", gX = 10, gY = 10, layer = 4, width = 205, height = 107, blockeable = false },
 
         { gX = 0, gY = 742, width = 792, height = 100, layer = 2, blockeable = true },
     },

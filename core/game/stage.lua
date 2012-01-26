@@ -1,10 +1,14 @@
 Stage = {}
 Stage_mt = { __index = Stage }
+setmetatable(Stage, Rect_mt)
 
 Stage.player = 0
 Stage.things = { }
 Stage.images = { }
 Stage.modules = { }
+
+Stage.width = 0
+Stage.height = 0
 
 Stage.initialPos = { gX = 100, gY = 100 }
 
@@ -29,11 +33,11 @@ function Stage:getPlayer()
 end
 
 function Stage:onKeyPressed(key)
-    self.player.script.keyPressed(self.player, key)
+    self.player.script:keyPressed(self.player, key)
 end
 
 function Stage:onKeyReleased(key)
-    self.player.script.keyReleased(self.player, key)
+    self.player.script:keyReleased(self.player, key)
 end
 
 function Stage:reset()
@@ -93,7 +97,7 @@ function Stage:moveThingTo(thing, gX, gY)
 end
 
 function Stage:canMoveThing(thing, gX, gY)
-    if thing.script.ignoreBlock(thing) then
+    if thing.script:ignoreBlock(thing) then
         return true
     end
     
@@ -134,7 +138,7 @@ function Stage:getCollidingThings(thing)
     
     for _, layer in ipairs(self.things) do
         for _, thingOnLayer in ipairs(layer) do
-            if thing ~= thingOnLayer and not thingOnLayer.script.ignoreBlock(thingOnLayer) and thing:isColliding(thingOnLayer) then
+            if thing ~= thingOnLayer and not thingOnLayer.script:ignoreBlock(thingOnLayer) and thing:isColliding(thingOnLayer) then
                 table.insert(ret, thingOnLayer)
             end
         end
@@ -161,10 +165,10 @@ function Stage:checkColision(thing, plusGX, plusGY)
 end
 
 function Stage:getLongestAvaiblePosition(thing, plusGX, plusGY)
-    if thing.script.ignoreBlock(thing) then
+    if thing.script:ignoreBlock(thing) then
         return { gX = thing:getGX() + plusGX, gY = thing:getGY() + plusGY }
     end
-    
+       
     local multiplePlusGX = 0
     local multiplePlusGY = 0
     

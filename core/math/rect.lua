@@ -83,4 +83,3 @@ function Rect.figureOutMovingDirection(oldPos, newPos)
         return "up"
     end
 end
-

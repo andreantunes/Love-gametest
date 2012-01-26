@@ -18,7 +18,7 @@ function Thing:setStage(stage)
 end
 
 function Thing:getImage()
-    local imageName = self.script.getImageName()
+    local imageName = self.script:getImageName()
     
     if imageName == nil then
         return nil
@@ -46,7 +46,8 @@ function Thing:setBlockeable(state)
 end
 
 function Thing:poll(dt)
-    self.script.poll(self, dt)
+    self.script:poll(self, dt)
+    self.script:actionsPoll(self, dt)
 end
 
 function Thing:isObject()
@@ -67,7 +68,8 @@ function Thing:setScript(script)
 end
 
 function Thing:onMove(oldPos, newPos)
-    self.script.onMove(self, oldPos, newPos)
+    self.script:onMove(self, oldPos, newPos)
+    self.script:actionsOnMove(self, oldPos, newPos)
 end
 
 function Thing:getStage()

@@ -2,42 +2,34 @@ local p = { }
 
 p.keys = { }
 
-function p.keyPressed(player, key)
-    p.keys[key] = true
-    p.onKeyPressed(player, key)
+function p:keyPressed(player, key)
+    self.keys[key] = true
+    self:onKeyPressed(player, key)
     
-    for _, action in ipairs(p.actions) do
+    for _, action in ipairs(self.actions) do
         if action.keyPressed ~= nil then
-            action.keyPressed(player, key)
+            action:keyPressed(player, key)
         end
     end
 end
 
-function p.keyReleased(player,key)
-    p.keys[key] = false
-    p.onKeyReleased(key)
+function p:keyReleased(player,key)
+    self.keys[key] = false
+    self:onKeyReleased(key)
     
-    for _, action in ipairs(p.actions) do
+    for _, action in ipairs(self.actions) do
         if action.keyReleased ~= nil then
-            action.keyReleased(player, key)
+            action:keyReleased(player, key)
         end
     end
 end
 
-function p.onKeyPressed(key)
+function p:onKeyPressed(key)
 
 end
 
-function p.onKeyReleased(key)
+function p:onKeyReleased(key)
     
-end
-
-function p.poll(thing, dt)
-    for _, action in ipairs(p.actions) do
-        if action.poll ~= nil then
-            action.poll(thing, dt)
-        end
-    end
 end
 
 return p

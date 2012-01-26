@@ -4,7 +4,7 @@ object.maxX = 150
 object.curX = 0
 object.going = true
 
-function object.poll(thing, dt)
+function object:poll(thing, dt)
     if object.going then
         thing:getStage():moveThing(thing, 0, 5)
         
@@ -24,12 +24,22 @@ function object.poll(thing, dt)
     end
 end
 
-function object.getImageName()
+function object:getImageName()
     return "stone"
 end
 
 function object:init(thing)
     object:setCurrentQuad(love.graphics.newQuad(0, 0, 124, 63, 124, 63))
+end
+
+local activatedActions = { "push.lua" } 
+
+function object:loadActions(stageName)
+    self.actions = { }
+    
+    for _, actionPath in ipairs(activatedActions) do
+        table.insert(self.actions, dofile('game/stages/' .. stageName .. "/objects/actions/" .. actionPath))
+    end
 end
 
 return object
