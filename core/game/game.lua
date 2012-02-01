@@ -15,8 +15,8 @@ function g_game:init()
     g_camera:setGX(0)
     g_camera:setGY(0)
     
-    g_camera:setW(1024)
-    g_camera:setH(768)
+    g_camera:setWidth(1024)
+    g_camera:setHeight(768)
 end
 
 function g_game:poll(dt)
@@ -46,11 +46,11 @@ function g_game:chooseStage(stageName)
 end
 
 function g_game:loadDefaultScripts()
-    self.defaultThingScript = dofile('game/thing.lua')
-    self.defaultCreatureScript = dofile('game/creature.lua')
-    self.defaultPlayerScript = dofile('game/player.lua')
-    self.defaultObjectScript = dofile('game/object.lua')
-    self.defaultMonsterScript = dofile('game/monster.lua')
+    self.defaultThingScript = dofile('core/script/thing.lua')
+    self.defaultCreatureScript = dofile('core/script/creature.lua')
+    self.defaultPlayerScript = dofile('core/script/player.lua')
+    self.defaultObjectScript = dofile('core/script/object.lua')
+    self.defaultMonsterScript = dofile('core/script/monster.lua')
 
     setmetatable(self.defaultCreatureScript, { __index = self.defaultThingScript } )
     setmetatable(self.defaultPlayerScript, { __index = self.defaultCreatureScript } )

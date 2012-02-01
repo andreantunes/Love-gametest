@@ -1,7 +1,7 @@
 g_camera = {}
 g_camera.stage = nil
 
-setmetatable(g_camera, Thing_mt)
+setmetatable(g_camera, Rect_mt)
 
 function g_camera:reset()
     self.stage = nil
@@ -21,11 +21,10 @@ function g_camera:poll(dt)
     end
     
     local stage = g_game.currentStage
-    
     local player = stage:getPlayer()
     
-    self:setGX(math.max(math.min(player:getGX() - (self:getW() / 2) + (player:getW() / 2), stage:getW() - self:getW()), 0))
-    self:setGY(math.max(math.min(player:getGY() - (self:getH() / 2), stage:getH() - self:getH()), 0))
+    self:setGX(math.max(math.min(player:getGX() - (self:getWidth() / 2) + (player:getWidth() / 2), stage:getWidth() - self:getWidth()), 0))
+    self:setGY(math.max(math.min(player:getGY() - (self:getHeight() / 2), stage:getHeight() - self:getHeight()), 0))
 end
 
 function g_camera:draw()

@@ -17,7 +17,7 @@ function m:gravity(stage, thing, dt)
     local y = math.ceil(dt * (thing.script.common.speedY))
     
     if y ~= 0 then
-        thing:getStage():moveThing(thing, 0, -y)
+        thing.script:move(0, -y)
     end
 end
 

@@ -9,6 +9,7 @@ local images = {
     { name="tashigi", path="image2.png" },
 
     { name="nuvem", path="nuvem.png" },
+    { name="pau", path="pau.png" },
 }
 
 return images

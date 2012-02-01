@@ -8,7 +8,7 @@ function object:getImageName()
     return "bg" .. count
 end
 
-function object:poll(thing, dt)
+function object:poll(dt)
     ticks = ticks + dt
     
     if ticks > 0.3 then
@@ -22,8 +22,9 @@ function object:poll(thing, dt)
     end
 end
 
-function object:init(thing)
-    self:setCurrentQuad(love.graphics.newQuad(0, 0, 3000, 960, 3000, 960))
+function object:init()
+    self.width = 3000
+    self.height = 960
 end
 
 return object

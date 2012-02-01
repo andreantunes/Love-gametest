@@ -16,8 +16,8 @@ end
 function Monster:load(stage, script)
     self:setImage(stage.images[script.image])
 
-    self:setW(script.w)
-    self:setH(script.h)
+    self:setWidth(script.w)
+    self:setHeight(script.h)
     
     self:setStage(stage)
 end

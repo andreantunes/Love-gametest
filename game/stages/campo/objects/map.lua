@@ -4,8 +4,9 @@ function object:getImageName()
     return "map"
 end
 
-function object:init(thing)
-    self:setCurrentQuad(love.graphics.newQuad(0, 0, 3000, 960, 3000, 960))
+function object:init()
+    self.width = 3000
+    self.height = 960
 end
 
 return object

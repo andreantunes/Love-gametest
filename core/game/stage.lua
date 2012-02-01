@@ -33,11 +33,11 @@ function Stage:getPlayer()
 end
 
 function Stage:onKeyPressed(key)
-    self.player.script:keyPressed(self.player, key)
+    self.player.script:keyPressed(key)
 end
 
 function Stage:onKeyReleased(key)
-    self.player.script:keyReleased(self.player, key)
+    self.player.script:keyReleased(key)
 end
 
 function Stage:reset()
@@ -97,7 +97,7 @@ function Stage:moveThingTo(thing, gX, gY)
 end
 
 function Stage:canMoveThing(thing, gX, gY)
-    if thing.script:ignoreBlock(thing) then
+    if thing.script:ignoreBlock() then
         return true
     end
     
@@ -138,7 +138,7 @@ function Stage:getCollidingThings(thing)
     
     for _, layer in ipairs(self.things) do
         for _, thingOnLayer in ipairs(layer) do
-            if thing ~= thingOnLayer and not thingOnLayer.script:ignoreBlock(thingOnLayer) and thing:isColliding(thingOnLayer) then
+            if thing ~= thingOnLayer and not thingOnLayer.script:ignoreBlock() and thing:isColliding(thingOnLayer) then
                 table.insert(ret, thingOnLayer)
             end
         end
@@ -165,7 +165,7 @@ function Stage:checkColision(thing, plusGX, plusGY)
 end
 
 function Stage:getLongestAvaiblePosition(thing, plusGX, plusGY)
-    if thing.script:ignoreBlock(thing) then
+    if thing.script:ignoreBlock() then
         return { gX = thing:getGX() + plusGX, gY = thing:getGY() + plusGY }
     end
        

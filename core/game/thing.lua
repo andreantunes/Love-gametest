@@ -46,8 +46,8 @@ function Thing:setBlockeable(state)
 end
 
 function Thing:poll(dt)
-    self.script:poll(self, dt)
-    self.script:actionsPoll(self, dt)
+    self.script:poll(dt)
+    self.script:actionsPoll(dt)
 end
 
 function Thing:isObject()
@@ -68,11 +68,18 @@ function Thing:setScript(script)
 end
 
 function Thing:onMove(oldPos, newPos)
-    self.script:onMove(self, oldPos, newPos)
-    self.script:actionsOnMove(self, oldPos, newPos)
+    self.script:onMove(oldPos, newPos)
+    self.script:actionsOnMove(oldPos, newPos)
 end
 
 function Thing:getStage()
     return self.stage
 end
 
+function Thing:getWidth()
+    return self.script.width 
+end
+
+function Thing:getHeight() 
+    return self.script.height 
+end

@@ -24,13 +24,13 @@ function Rect:addGY(y) self.gY = self.gY + y end
 
 function Rect:setGX(x) self.gX = x end
 function Rect:setGY(y) self.gY = y end
-function Rect:setW(w) self.width = w end
-function Rect:setH(h) self.height = h end
+function Rect:setWidth(w) self.width = w end
+function Rect:setHeight(h) self.height = h end
 
 function Rect:getGX() return self.gX end
 function Rect:getGY() return self.gY end
-function Rect:getW() return self.width end
-function Rect:getH() return self.height end
+function Rect:getWidth() return self.width end
+function Rect:getHeight() return self.height end
 
     
 function Rect:isInMyArea(gX, gY)
@@ -43,9 +43,9 @@ end
 
 function Rect:internalColliding(thing)
     return self:isInMyArea(thing:getGX(), thing:getGY())
-        or self:isInMyArea(thing:getGX(), thing:getGY() + thing:getH())
-        or self:isInMyArea(thing:getGX() + thing:getW(), thing:getGY())
-        or self:isInMyArea(thing:getGX() + thing:getW(), thing:getGY() + thing:getH())
+        or self:isInMyArea(thing:getGX(), thing:getGY() + thing:getHeight())
+        or self:isInMyArea(thing:getGX() + thing:getWidth(), thing:getGY())
+        or self:isInMyArea(thing:getGX() + thing:getWidth(), thing:getGY() + thing:getHeight())
 end
 
 function Rect:isColliding(thing)
@@ -53,8 +53,8 @@ function Rect:isColliding(thing)
 end
 
 function Rect:getNearestValidPosition(thing, direction)
-    local myPos = { gX = self:getGX(), gY = self:getGY(), w = self:getW(), h = self:getH() }
-    local thingPos = { gX = thing:getGX(), gY = thing:getGY(), w = thing:getW(), h = thing:getH() }
+    local myPos = { gX = self:getGX(), gY = self:getGY(), w = self:getWidth(), h = self:getHeight() }
+    local thingPos = { gX = thing:getGX(), gY = thing:getGY(), w = thing:getWidth(), h = thing:getHeight() }
 
     if direction == "right" then
         return { gX = myPos.gX + myPos.w + 1 , gY = thingPos.gY } 

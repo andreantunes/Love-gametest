@@ -9,12 +9,12 @@ monster.currentImageY2 = 52
 
 monster.lol = 0
 
-function monster:poll(thing, dt)
-    if monster.lol == 0 then
-        monster.lol = math.random(1,3)
+function monster:poll(dt)
+    if self.lol == 0 then
+        self.lol = math.random(1,4)
     end
     
-    thing:getStage():moveThing(thing, 2, 0)
+    self:move(self.lol, 0)
 end
 
 function monster:getImageName()
@@ -22,7 +22,8 @@ function monster:getImageName()
 end
 
 function monster:init(thing)
-    self:setCurrentQuad(love.graphics.newQuad(0, 0, 52, 52, 52, 52))
+    self.width = 52
+    self.height = 52
 end
 
 return monster

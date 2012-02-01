@@ -6,9 +6,9 @@ local maxJumpTicks = 0.8
 
 local jumpPixelsPerSecond = 350
 
-function action:poll(thing, dt)
+function action:poll(player, dt)
     if isJumping then
-        if thing:getStage():checkColision(thing, 0, 1) and thing.script.common.speedY <= 0 then
+        if player:getStage():checkColision(player, 0, 1) and player.script.common.speedY <= 0 then
             isJumping = false
             
             return
@@ -16,14 +16,14 @@ function action:poll(thing, dt)
     end
 end
 
-function action:keyPressed(thing, key)
+function action:keyPressed(player, key)
     if key == "up" and not isJumping then
-        if thing:getStage():checkColision(thing, 0, 3) then
-            if thing.script.common.speedY == nil then
-                thing.script.common.speedY = 0
+        if player:getStage():checkColision(player, 0, 3) then
+           if player.script.common.speedY == nil then
+                player.script.common.speedY = 0
             end
             
-            thing.script.common.speedY = thing.script.common.speedY + jumpPixelsPerSecond
+            player.script.common.speedY = player.script.common.speedY + jumpPixelsPerSecond
 
             isJumping = true
         end

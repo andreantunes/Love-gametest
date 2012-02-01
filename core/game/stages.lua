@@ -29,8 +29,8 @@ function g_stages:loadMain(stage, stageName)
         stage:addModule(moduleScript)
     end
     
-    stage:setW(main.width)
-    stage:setH(main.height)
+    stage:setWidth(main.width)
+    stage:setHeight(main.height)
 end
 
 function g_stages:loadThings(stage, stageName)
@@ -38,36 +38,43 @@ function g_stages:loadThings(stage, stageName)
     
     for _, thing in ipairs(things.objects) do
         local newObject = Object.create()
-
-        if thing.image ~= nil then
-            newObject:setImage(stage.images[thing.image])
-        else
-            newObject:setNoImage(true)
-        end
         
         newObject:setGX(thing.gX)
         newObject:setGY(thing.gY)
-        newObject:setW(thing.width)
-        newObject:setH(thing.height)
         
         newObject:setStage(stage)
         newObject:setBlockeable(thing.blockeable)
 
         local objectScript = nil
         
+        local defaultScript = false
+        
         if thing.script ~= nil then
             objectScript = dofile('game/stages/' .. stageName .. "/objects/" .. thing.script)
         else
+            defaultScript = true
             objectScript = dofile('game/stages/' .. stageName .. "/objects/default.lua")
         end
         
         setmetatable(objectScript, { __index = g_game.defaultObjectScript } )
         
         newObject:setScript(objectScript)
-        newObject.script:init(newObject)
         newObject.script:loadActions(stageName)
-        newObject.script:thingInit()
+        newObject.script:thingInit(newObject)
 
+        if defaultScript then
+            newObject:setWidth(thing.width)
+            newObject:setHeight(thing.height)
+            
+            if thing.toGX ~= nil then
+                newObject:setWidth(thing.toGX - thing.gX)
+            end
+            
+            if thing.toGY ~= nil then
+                newObject:setHeight(thing.toGY - thing.gY)
+            end
+        end
+        
         stage:addThing(newObject, thing.layer)
     end
     
@@ -77,8 +84,6 @@ function g_stages:loadThings(stage, stageName)
     
     newPlayer:setGX(player.gX)
     newPlayer:setGY(player.gY)
-    newPlayer:setW(player.width)
-    newPlayer:setH(player.height)
     
     newPlayer:setStage(stage)
     stage:setPlayer(newPlayer)
@@ -88,8 +93,7 @@ function g_stages:loadThings(stage, stageName)
     
     newPlayer:setScript(playerScript)
     newPlayer.script:loadActions(stageName)
-    newPlayer.script:init(newPlayer)
-    newPlayer.script:thingInit()
+    newPlayer.script:thingInit(newPlayer)
         
     stage:addThing(newPlayer, player.layer)
     
@@ -104,9 +108,8 @@ function g_stages:loadThings(stage, stageName)
         
         newMonster:load(stage, monsterScript)
         newMonster:setScript(monsterScript)
-        newMonster.script:init(newMonster)
         newMonster.script:loadActions(stageName)
-        newMonster.script:thingInit()
+        newMonster.script:thingInit(newMonster)
             
         stage:addThing(newMonster, thing.layer)
     end
