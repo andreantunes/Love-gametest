@@ -5,7 +5,6 @@ Thing_mt = { __index = Thing }
 Thing.stage = nil
 Thing.image = nil
 Thing.name = ''
-Thing.blockeable = false
 Thing.noImage = false
 Thing.script = 0
 
@@ -38,11 +37,7 @@ function Thing.create()
 end
 
 function Thing:isBlockeable()
-    return self.blockeable
-end
-
-function Thing:setBlockeable(state)
-    self.blockeable = state
+    return self.script:blockeable()
 end
 
 function Thing:poll(dt)

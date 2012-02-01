@@ -9,6 +9,7 @@ Stage.modules = { }
 
 Stage.width = 0
 Stage.height = 0
+Stage.name = 0
 
 Stage.initialPos = { gX = 100, gY = 100 }
 
@@ -189,4 +190,12 @@ function Stage:getLongestAvaiblePosition(thing, plusGX, plusGY)
     end
     
     return nil
+end
+
+function Stage:setName(name)
+    self.name = name
+end
+
+function Stage:getName()
+    return self.name
 end

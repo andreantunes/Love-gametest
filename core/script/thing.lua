@@ -86,4 +86,8 @@ function t:move(gX, gY)
     self.thing:getStage():moveThing(self.thing, gX, gY)
 end
 
+function t:blockeable()
+    return false
+end
+
 return t

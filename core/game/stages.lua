@@ -6,6 +6,7 @@ function g_stages:load(stageName)
     
     self.stages[stageName] = stage
     
+    stage:setName(stageName)
     self:loadImages(stage, stageName)
     self:loadThings(stage, stageName)
     self:loadMain(stage, stageName)
@@ -33,49 +34,69 @@ function g_stages:loadMain(stage, stageName)
     stage:setHeight(main.height)
 end
 
+function g_stages:createMonster(stage, layer, gX, gY, scriptPath)
+    local stageName = stage:getName()
+    local newMonster = Monster.create()
+    
+    newMonster:setGX(gX)
+    newMonster:setGY(gY)
+    
+    local monsterScript = dofile('game/stages/' .. stageName .. "/monsters/" .. scriptPath)
+    setmetatable(monsterScript, { __index = g_game.defaultMonsterScript } )
+    
+    newMonster:load(stage, monsterScript)
+    newMonster:setScript(monsterScript)
+    newMonster.script:loadActions(stageName)
+    newMonster.script:thingInit(newMonster)
+        
+    stage:addThing(newMonster, layer)
+end
+
+function g_stages:createObject(stage, layer, gX, gY, toGX, toGY, scriptPath)
+    local newObject = Object.create()
+        
+    newObject:setGX(gX)
+    newObject:setGY(gY)
+    
+    newObject:setStage(stage)
+
+    local stageName = stage:getName()
+    
+    local objectScript = nil
+    
+    local defaultScript = false
+    
+    if scriptPath ~= nil then
+        objectScript = dofile('game/stages/' .. stageName .. "/objects/" .. scriptPath)
+    else
+        defaultScript = true
+        objectScript = dofile('game/stages/' .. stageName .. "/objects/default.lua")
+    end
+    
+    setmetatable(objectScript, { __index = g_game.defaultObjectScript } )
+    
+    newObject:setScript(objectScript)
+    newObject.script:loadActions(stageName)
+    newObject.script:thingInit(newObject)
+
+    if defaultScript then
+        if toGX ~= nil then
+            newObject:setWidth(toGX - gX)
+        end
+        
+        if toGY ~= nil then
+            newObject:setHeight(toGY - gY)
+        end
+    end
+    
+    stage:addThing(newObject, layer)
+end
+
 function g_stages:loadThings(stage, stageName)
     local things = dofile('game/stages/' .. stageName .. "/things.lua")
     
     for _, thing in ipairs(things.objects) do
-        local newObject = Object.create()
-        
-        newObject:setGX(thing.gX)
-        newObject:setGY(thing.gY)
-        
-        newObject:setStage(stage)
-        newObject:setBlockeable(thing.blockeable)
-
-        local objectScript = nil
-        
-        local defaultScript = false
-        
-        if thing.script ~= nil then
-            objectScript = dofile('game/stages/' .. stageName .. "/objects/" .. thing.script)
-        else
-            defaultScript = true
-            objectScript = dofile('game/stages/' .. stageName .. "/objects/default.lua")
-        end
-        
-        setmetatable(objectScript, { __index = g_game.defaultObjectScript } )
-        
-        newObject:setScript(objectScript)
-        newObject.script:loadActions(stageName)
-        newObject.script:thingInit(newObject)
-
-        if defaultScript then
-            newObject:setWidth(thing.width)
-            newObject:setHeight(thing.height)
-            
-            if thing.toGX ~= nil then
-                newObject:setWidth(thing.toGX - thing.gX)
-            end
-            
-            if thing.toGY ~= nil then
-                newObject:setHeight(thing.toGY - thing.gY)
-            end
-        end
-        
-        stage:addThing(newObject, thing.layer)
+        self:createObject(stage, thing.layer, thing.gX, thing.gY, thing.toGX, thing.toGY, thing.script)
     end
     
     local player = things.player
@@ -98,20 +119,7 @@ function g_stages:loadThings(stage, stageName)
     stage:addThing(newPlayer, player.layer)
     
     for _, thing in ipairs(things.monsters) do
-        local newMonster = Monster.create()
-        
-        newMonster:setGX(thing.gX)
-        newMonster:setGY(thing.gY)
-        
-        local monsterScript = dofile('game/stages/' .. stageName .. "/monsters/" .. thing.script)
-        setmetatable(monsterScript, { __index = g_game.defaultMonsterScript } )
-        
-        newMonster:load(stage, monsterScript)
-        newMonster:setScript(monsterScript)
-        newMonster.script:loadActions(stageName)
-        newMonster.script:thingInit(newMonster)
-            
-        stage:addThing(newMonster, thing.layer)
+        self:createMonster(stage, thing.layer, thing.gX, thing.gY, thing.script)
     end
 end
 

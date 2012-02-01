@@ -43,4 +43,8 @@ function object:loadActions(stageName)
     end
 end
 
+function object:blockeable()
+    return true
+end
+
 return object
